@@ -11,5 +11,4 @@ cdk.out
 .cache
 .build
 
-.fonts
 chrome_aws_lambda.zip
