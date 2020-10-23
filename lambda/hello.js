@@ -3,6 +3,7 @@ const aws = require("aws-sdk");
 const s3 = new aws.S3();
 const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
+const Mustache = require('mustache');
 
 exports.handler = async function (event) {
     const browser = await chromium.puppeteer.launch({
@@ -12,9 +13,18 @@ exports.handler = async function (event) {
         headless: chromium.headless,
     });
 
-    const file = fs.readFileSync(__dirname + "/screen/sample.html");
+    const body = JSON.parse(event.body);
+
+    const params = {
+        body: body.body,
+        font: "Noto Sans JP",
+        color: body.color,
+    };
+
     const page = await browser.newPage();
-    await page.setContent(file.toString());
+    const file = fs.readFileSync(__dirname + "/screen/sample.mustache");
+    const output = Mustache.render(file.toString(), params);
+    await page.setContent(output);
 
     const screenshot = await page.screenshot({
         type: "png",
@@ -37,6 +47,6 @@ exports.handler = async function (event) {
     return {
         statusCode: 200,
         headers: { "Content-Type": "text/plain" },
-        body: `${bucket}/${key}.png`
+        body: `https://${bucket}.s3-ap-northeast-1.amazonaws.com/${key}.png`
     };
 };
