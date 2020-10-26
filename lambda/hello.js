@@ -28,9 +28,14 @@ exports.handler = async function (event) {
 
     const screenshot = await page.screenshot({
         type: "png",
-        fullPage: true,
         omitBackground: true,
         encoding: "binary",
+        clip: {
+            x: 0,
+            y: 0,
+            width: 1200,
+            height: 630
+        }
     });
     await browser.close();
 
