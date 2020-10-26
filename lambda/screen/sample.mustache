@@ -3,14 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <style type="text/css">
-      body {
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .body {
+        width: 1200px;
+        height: 630px;
         font-family: {{font}};
         background-color: {{color}};
+        font-size: 85px;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden; 
       }
     </style>
     <title>サンプル</title>
   </head>
   <body>
-    {{body}}
+    <div class="body">
+      {{body}}
+    </div>
   </body>
 </html>
