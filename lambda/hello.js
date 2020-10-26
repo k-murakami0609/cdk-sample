@@ -5,6 +5,31 @@ const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
 const Mustache = require('mustache');
 
+const COLORS = [
+    "#f9a675",
+    "#f7bbd9",
+    "#e0857d",
+    "#cc9ed6",
+    "#696969",
+    "#7daff4",
+    "#f4b4b4",
+    "#ada5ea",
+    "#bfd180",
+    "#bdb7aa",
+    "#87ac74",
+    "#87c9c7",
+    "#a1dbe6",
+    "#88c4a6",
+    "#eedb7e",
+    "#72c1de",
+    "#91765e",
+    "#c9c986",
+    "#c75d68",
+    "#d1d1d1",
+];
+
+const FONTS = ["Noto Sans JP", "Noto Sans Bold", "Noto Sans Light", "Noto Sans Medium", "Noto Sans Regular", "Noto Sans Thin"]
+
 exports.handler = async function (event) {
     const browser = await chromium.puppeteer.launch({
         args: chromium.args,
@@ -17,8 +42,8 @@ exports.handler = async function (event) {
 
     const params = {
         body: body.body,
-        font: "Noto Sans JP",
-        color: body.color,
+        font: body.font || FONTS[Math.floor(Math.random() * FONTS.length + 1)],
+        color: body.color || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
     };
 
     const page = await browser.newPage();
