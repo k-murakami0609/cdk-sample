@@ -35,6 +35,11 @@ export class CdkWorkshopStack extends cdk.Stack {
     // defines an API Gateway REST API resource backed by our "hello" function.
     const api = new apigw.LambdaRestApi(this, "Endpoint", {
       handler: hello,
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+        allowMethods: ['GET', 'POST', 'OPTIONS'],
+        statusCode: 200,
+      },
     });
 
     bucket.grantReadWrite(hello);

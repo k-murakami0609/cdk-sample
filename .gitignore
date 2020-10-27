@@ -12,3 +12,6 @@ cdk.out
 .build
 
 chrome_aws_lambda.zip
+.fonts
+.DS_Store
+*.png

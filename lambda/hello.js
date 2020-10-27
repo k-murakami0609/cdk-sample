@@ -28,7 +28,10 @@ const COLORS = [
     "#d1d1d1",
 ];
 
-const FONTS = ["Noto Sans JP", "Noto Sans Bold", "Noto Sans Light", "Noto Sans Medium", "Noto Sans Regular", "Noto Sans Thin"]
+const FONTS = ["Noto Sans JP"]
+
+const WINDOW_SIZE_WIDTH = 1200;
+const WINDOW_SIZE_HEIGHT = 630;
 
 exports.handler = async function (event) {
     const browser = await chromium.puppeteer.launch({
@@ -43,7 +46,10 @@ exports.handler = async function (event) {
     const params = {
         body: body.body,
         font: body.font || FONTS[Math.floor(Math.random() * FONTS.length + 1)],
-        color: body.color || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
+        fontColor: body.fontColor || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
+        backGroundColor: body.backGroundColor || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
+        width: WINDOW_SIZE_WIDTH,
+        height: WINDOW_SIZE_HEIGHT,
     };
 
     const page = await browser.newPage();
@@ -58,8 +64,8 @@ exports.handler = async function (event) {
         clip: {
             x: 0,
             y: 0,
-            width: 1200,
-            height: 630
+            width: WINDOW_SIZE_WIDTH,
+            height: WINDOW_SIZE_HEIGHT
         }
     });
     await browser.close();
@@ -76,7 +82,7 @@ exports.handler = async function (event) {
     console.log("request:", JSON.stringify(event, undefined, 2));
     return {
         statusCode: 200,
-        headers: { "Content-Type": "text/plain" },
+        headers: { "Content-Type": "text/plain", "Access-Control-Allow-Origin": "*" },
         body: `https://${bucket}.s3-ap-northeast-1.amazonaws.com/${key}.png`
     };
 };
