@@ -1,32 +1,59 @@
+
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <style type="text/css">
-      * {
-        margin: 0;
-        padding: 0;
-      }
-
-      .body {
-        width: {{width}}px;
-        height: {{height}}px;
-        font-family: {{font}};
-        color: {{fontColor}};
-        background-color: {{backGroundColor}};
-        font-size: 85px;
-
-        display: -webkit-box;
-        -webkit-line-clamp: 5;
-        -webkit-box-orient: vertical;
-        overflow: hidden; 
-      }
-    </style>
-    <title>サンプル</title>
-  </head>
-  <body>
-    <div class="body">
-      {{body}}
-    </div>
-  </body>
+ <head>
+   <meta charset="UTF-8" />
+   <style type="text/css">
+     * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+     }
+     body{
+       width: {{width}}px;
+       height: {{height}}px;
+       color: {{fontColor}};
+       font-family: {{font}};
+       background-color: {{backGroundColor}};
+       display: flex;
+       align-items: center;
+       justify-content: center;
+     }
+     .body {
+       display: -webkit-box;
+       -webkit-box-orient: vertical;
+       overflow: hidden;
+     }
+     .large {
+       {{! 11 x 7 }}
+       font-size: 81px;
+       line-height: 131px;
+       width: 11em;
+       -webkit-line-clamp: 7;
+       font-weight: 600;
+     }
+     .medium {
+       {{! 8 x 6 }}
+       font-size: 112px;
+       line-height: 152px;
+       width: 8em;
+       -webkit-line-clamp: 6;
+       font-weight: 500;
+     }
+     .small {
+       {{! 7 x 5 }}
+       font-size: 128px;
+       line-height: 188px;
+       width: 7em;
+       -webkit-line-clamp: 5;
+       font-weight: 400;
+     }
+   </style>
+   <title>サンプル</title>
+ </head>
+ <body>
+   <div class="body {{bodyLengthClass}}">
+     {{body}}
+   </div>
+ </body>
 </html>

@@ -28,10 +28,10 @@ const COLORS = [
     "#d1d1d1",
 ];
 
-const FONTS = ["Noto Sans JP"]
+// const FONTS = ["Noto Serif JP"]
 
 const WINDOW_SIZE_WIDTH = 1200;
-const WINDOW_SIZE_HEIGHT = 630;
+const WINDOW_SIZE_HEIGHT = 1200;
 
 exports.handler = async function (event) {
     const browser = await chromium.puppeteer.launch({
@@ -42,10 +42,12 @@ exports.handler = async function (event) {
     });
 
     const body = JSON.parse(event.body);
+    const bodyLength = [...body.body].length;
 
     const params = {
         body: body.body,
-        font: body.font || FONTS[Math.floor(Math.random() * FONTS.length + 1)],
+        bodyLengthClass: bodyLength > 48 ? 'large' : bodyLength > 35 ? 'medium' : 'small',
+        font: body.font || "Noto Serif JP",
         fontColor: body.fontColor || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
         backGroundColor: body.backGroundColor || COLORS[Math.floor(Math.random() * COLORS.length + 1)],
         width: WINDOW_SIZE_WIDTH,
