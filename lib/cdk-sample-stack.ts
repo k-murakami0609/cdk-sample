@@ -32,12 +32,20 @@ export class CdkWorkshopStack extends cdk.Stack {
       tracing: lambda.Tracing.ACTIVE,
     });
 
+    const currentVersion = hello.currentVersion;
+
+    const development = new lambda.Alias(this, "DevelopmentAlias", {
+      aliasName: "development",
+      version: currentVersion,
+      provisionedConcurrentExecutions: 3,
+    });
+
     // defines an API Gateway REST API resource backed by our "hello" function.
     const api = new apigw.LambdaRestApi(this, "Endpoint", {
-      handler: hello,
+      handler: development,
       defaultCorsPreflightOptions: {
         allowOrigins: apigw.Cors.ALL_ORIGINS,
-        allowMethods: ['GET', 'POST', 'OPTIONS'],
+        allowMethods: ["GET", "POST", "OPTIONS"],
         statusCode: 200,
       },
     });
